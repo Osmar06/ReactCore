@@ -1,0 +1,15 @@
+module.exports = {
+  "@primary-color": "#2196f3",
+  "@success-color": "#1e8e3e",
+  "@info-color": "@primary-color",
+  "@warning-color": "#ffc440",
+  "@error-color": "#e80003",
+  "@processing-color": "@primary-color",
+  "@menu-dark-bg": "#0069c0",
+  "@menu-dark-submenu-bg": "#0077c1",
+  "@layout-header-background": "#ffffff",
+  "@layout-header-height": "55px",
+  "@layout-sider-background": "@menu-dark-bg",
+  "@link-color": "@primary-color",
+  "@layout-header-padding": "10px",
+};
