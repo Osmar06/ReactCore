@@ -2,7 +2,6 @@ import React from "react";
 import {
   Form,
   Input,
-  Button,
   Checkbox,
   DatePicker,
   InputNumber,
@@ -22,7 +21,7 @@ const inputTypes = {
   select: "select",
 };
 
-const FormInput = ({ type, boxLabel, items = [], ...props }) => {
+const FormInput = ({ type, boxLabel, items = [], onValueChange, ...props }) => {
   const getRadioItems = () =>
     items.map((item) => (
       <Radio.Button value={item.value} key={item.value}>
@@ -51,7 +50,7 @@ const FormInput = ({ type, boxLabel, items = [], ...props }) => {
       case inputTypes.switch:
         return <Switch />;
       case inputTypes.select:
-        return <Select>{getSelecttems()}</Select>;
+        return <Select onChange={onValueChange}>{getSelecttems()}</Select>;
       case inputTypes.radio:
         return <Radio.Group>{getRadioItems()}</Radio.Group>;
       default:

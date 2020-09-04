@@ -1,7 +1,13 @@
-import React from "react";
+import React, { createRef } from "react";
 import { BasicLayout } from "pages";
-import { Form, Input, Button, Checkbox } from "antd";
-import { FormInput } from "components";
+import { Form, Button, Card } from "antd";
+import { FormInput, CenterContent } from "components";
+import { FormattedMessage } from "react-intl";
+import useAuth from "services/auth";
+import { useStoreState } from "easy-peasy";
+import { Status, AppState } from "common/constants";
+import { Redirect, Route } from "react-router-dom";
+import Routes from "routes";
 
 const layout = {
   labelCol: { span: 8 },
@@ -12,57 +18,64 @@ const tailLayout = {
 };
 
 export default () => {
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const { login, state } = useAuth();
+  const { status } = useStoreState((state) => ({
+    status: state.login.status,
+  }));
+
+  const loginUser = (values) => {
+    login(values);
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-  return (
-    <BasicLayout>
-      <Form
-        {...layout}
-        name="basic"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-        <FormInput
-          label="Username"
-          name="username"
-          rules={[{ required: true, message: "Please input your username!" }]}
-        />
+  const isLoading = status === Status.FETCHING;
 
-        <FormInput
-          label="Password"
-          name="password"
-          type="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
-        />
+  const onFinishFailed = () => {};
 
-        <FormInput
-          {...tailLayout}
-          type="select"
-          items={[
-            { text: "test", value: 1 },
-            { text: "test 2", value: 2 },
-          ]}
-        />
+  const buttonRef = createRef();
 
-        <FormInput
-          {...tailLayout}
-          type="check"
-          boxLabel="Remember me"
-          valuePropName="checked"
-        />
+  return state === AppState.PRIVATE ? (
+    <Redirect to={Routes.HOME} />
+  ) : (
+    <BasicLayout hideHeader={true} loading={isLoading}>
+      <CenterContent span={8}>
+        <Card title={<FormattedMessage id="message.welcome" />}>
+          <Form
+            {...layout}
+            name="basic"
+            initialValues={{ remember: true }}
+            onFinish={loginUser}
+            onFinishFailed={onFinishFailed}
+          >
+            <FormInput
+              label="Email"
+              name="email"
+              rules={[{ required: true, message: "Please input your email!" }]}
+            />
 
-        <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
+            <FormInput
+              label="Password"
+              name="password"
+              type="password"
+              rules={[
+                { required: true, message: "Please input your password!" },
+              ]}
+            />
+            <FormInput
+              {...tailLayout}
+              type="check"
+              name="remember"
+              boxLabel="Remember me"
+              valuePropName="checked"
+            />
+
+            <Form.Item {...tailLayout}>
+              <Button ref={buttonRef} type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        </Card>
+      </CenterContent>
     </BasicLayout>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useContext } from "react";
-import { AppState } from "common/constants";
+import { AppState, Storage } from "common/constants";
 import { useStoreActions, useStoreState } from "easy-peasy";
-import StorageService from "../StorageService";
+import StorageService from "../storage/StorageService";
 
 const AppStateContext = React.createContext();
 
@@ -9,7 +9,7 @@ export const useAppContext = () => {
   return useContext(AppStateContext);
 };
 
-export const AppContextProvider = (props) => {
+export const AppContextProvider = ({ children }) => {
   const { loginUser, setState, checkLogin } = useStoreActions((actions) => ({
     loginUser: actions.login.loginUser,
     setState: actions.login.changeAppState,
@@ -17,9 +17,8 @@ export const AppContextProvider = (props) => {
   }));
 
   const state = useStoreState((store) => store.login.appstate);
-
   const logoutUser = useCallback(async () => {
-    StorageService.remove("credentials");
+    StorageService.remove(Storage.CREDENTIALS);
     setState(AppState.PUBLIC);
   }, [setState]);
 
@@ -60,7 +59,7 @@ export const AppContextProvider = (props) => {
         login,
       }}
     >
-      {props.children}
+      {children}
     </AppStateContext.Provider>
   );
 };

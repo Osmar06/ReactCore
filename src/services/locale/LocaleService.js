@@ -1,12 +1,8 @@
-import { StorageService } from "./StorageService";
-import locales from "../i18n";
+import { StorageService } from "../storage";
+import locales from "../../languages";
 import english from "antd/es/locale/en_US";
 import spanish from "antd/es/locale/es_ES";
-
-const languages = {
-  spanish: "es",
-  english: "en",
-};
+import { Storage, Locales } from "common/constants";
 
 const get = (key, args) => {
   const messages = getMessages();
@@ -24,7 +20,7 @@ const getFormattedMessage = (message, args) => {
   return message;
 };
 
-const getLocale = () => StorageService.get("language") || languages.spanish;
+const getLocale = () => StorageService.get(Storage.LOCALE) || Locales.SPANISH;
 
 const getMessages = (locale) => locales[locale || getLocale()] || {};
 
@@ -37,16 +33,14 @@ const getIntlProvider = () => {
 
 const getAntProvider = () => {
   switch (getLocale()) {
-    case languages.spanish:
+    case Locales.SPANISH:
       return { locale: spanish };
-    case languages.english:
+    case Locales.ENGLISH:
       return { locale: english };
     default:
       return { locale: spanish };
   }
 };
-
-const setLocale = (key) => LocaleStore.set(key || languages.spanish);
 
 export default {
   get,
@@ -54,6 +48,4 @@ export default {
   getLocale,
   getAntProvider,
   getIntlProvider,
-  setLocale,
-  languages,
 };

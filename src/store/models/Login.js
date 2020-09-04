@@ -1,20 +1,17 @@
 import { action, thunk } from "easy-peasy";
 import BaseModel from "./Base";
-import { AppState, Status } from "common/constants";
+import { AppState, Status, Storage } from "common/constants";
 import { ApiService } from "../index";
-import StorageService from "../../services/StorageService";
+import { StorageService } from "../../services/storage";
 
 const actions = {
   changeAppState: action((state, payload) => {
     state.appstate = payload;
   }),
-  onLoginInputChange: action((state, { key, value }) => {
-    state[key] = value;
-  }),
 };
 
 const checkLogin = thunk(async (actions, payload, { dispatch, injections }) => {
-  const credentials = await StorageService.get("credentials");
+  const credentials = StorageService.get(Storage.CREDENTIALS);
 
   if (credentials && credentials.token) {
     ApiService.setAuthorizationHeader(credentials.token);
@@ -32,13 +29,13 @@ const loginUser = thunk(async (actions, payload, { dispatch }) => {
 
   actions.updateStatus(response.ok ? Status.SUCCESS : Status.FAILED);
   if (!response.ok) {
-    await StorageService.remove("credentials");
+    StorageService.remove(Storage.CREDENTIALS);
     return actions.showError(response.data.error);
   }
 
   actions.changeAppState(AppState.PRIVATE);
   ApiService.setAuthorizationHeader(response.data.token);
-  await StorageService.add("credentials", response.data);
+  StorageService.add(Storage.CREDENTIALS, response.data);
 });
 
 export default {

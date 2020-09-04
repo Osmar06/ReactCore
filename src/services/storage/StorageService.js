@@ -1,33 +1,33 @@
-async function add(key, value) {
+function add(key, value) {
   try {
-    await localStorage.setItem(key, toSafeItem(value));
+    localStorage.setItem(key, toSafeItem(value));
     return responseSuccess;
   } catch (e) {
     return responseError(e);
   }
 }
 
-async function get(key) {
+function get(key) {
   try {
-    const result = await localStorage.getItem(key);
+    const result = localStorage.getItem(key);
     return transformItem(result);
   } catch (e) {
     return responseError(e);
   }
 }
 
-async function remove(key) {
+function remove(key) {
   try {
-    await localStorage.removeItem(key);
+    localStorage.removeItem(key);
     return responseSuccess;
   } catch (e) {
     return responseError(e);
   }
 }
 
-async function clearAll() {
+function clearAll() {
   try {
-    await localStorage.clear();
+    localStorage.clear();
   } catch (e) {
     return responseError(e);
   }

@@ -1,0 +1,5 @@
+{
+  "message.emailRequired": "Por favor ingresa tu correo",
+  "message.passwordRequired": "Por favor ingresa tu contraseña",
+  "message.welcome": "Bienvenido a NativeCore"
+}

@@ -1,6 +1,6 @@
-import LoginModel from './Login';
-import UserModel from './User';
-import ResourceModel from './Resource';
+import LoginModel from "./Login";
+import UserModel from "./User";
+import ResourceModel from "./Resource";
 
 export default {
   login: LoginModel,

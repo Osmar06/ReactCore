@@ -1,5 +1,6 @@
 import { action } from "easy-peasy";
 import { Status } from "common/constants";
+import { notification } from "antd";
 
 const BaseModel = () => ({
   status: Status.NOT_STARTED,
@@ -9,9 +10,11 @@ const BaseModel = () => ({
   mergeState: action((state, extra) => {
     Object.assign(state, extra);
   }),
-  showError: action((state, message) => {
-    state.error = message;
-    console.log(message);
+  showError: action((state, payload) => {
+    const messageConfig =
+      payload instanceof Object ? payload : { message: payload };
+    state.error = messageConfig.message;
+    notification.error(messageConfig);
   }),
 });
 
