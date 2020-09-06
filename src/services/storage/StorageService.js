@@ -35,7 +35,6 @@ function clearAll() {
 
 const toSafeItem = (value) => {
   const result = JSON.stringify({ value: value });
-  console.log("Safe Item ", result);
   return result;
 };
 
@@ -52,7 +51,6 @@ const transformItem = (value) => {
 const responseSuccess = { success: true };
 
 const responseError = (e) => {
-  console.log("Local Storage access Failed", e);
   return { success: false, error: e };
 };
 

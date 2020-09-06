@@ -1,6 +1,5 @@
 import { create } from "apisauce";
 import config from "../../config";
-import apiMonitor from "./monitor";
 //import setInterceptor from './interceptor';
 import createApiAuth from "./auth";
 import createApiResources from "./resources";
@@ -16,8 +15,6 @@ const createApiClient = (baseURL = config.apiBaseUrl) => {
     },
     timeout: 15000,
   });
-
-  baseApi.addMonitor(apiMonitor);
 
   // use interceptor if using oAuth for authentication
   // setInterceptor(api);

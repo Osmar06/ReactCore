@@ -1,16 +1,20 @@
-import React, { Children } from "react";
+import React from "react";
 import { Layout, Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-
-const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+import { Icon } from "components";
+import useStyles from "styles";
 const { Header, Content } = Layout;
 
 export default ({ loading = false, children, hideHeader = false }) => {
+  const classes = useStyles();
   return (
     <Layout>
       {!hideHeader && <Header></Header>}
       <Layout>
-        <Spin spinning={loading} indicator={antIcon} size="large">
+        <Spin
+          spinning={loading}
+          indicator={<Icon type="loading" className={classes.loading} spin />}
+          size="large"
+        >
           <Content style={{ height: "100vh" }}>{children}</Content>
         </Spin>
       </Layout>

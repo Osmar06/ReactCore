@@ -1,5 +1,5 @@
-const { useState, useEffect } = require("react");
-const { default: StorageService } = require("./StorageService");
+import { useState, useEffect } from "react";
+import StorageService from "./StorageService";
 
 const useStorage = (key, defaultValue) => {
   const [storageValue, setStorageValue] = useState(defaultValue);

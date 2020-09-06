@@ -3,12 +3,12 @@ import { Status } from "common/constants";
 import { notification } from "antd";
 
 const BaseModel = () => ({
-  status: Status.NOT_STARTED,
+  status: Status.STOPPED,
   updateStatus: action((state, status) => {
     state.status = status;
   }),
-  mergeState: action((state, extra) => {
-    Object.assign(state, extra);
+  mergeState: action((state, payload) => {
+    Object.assign(state, payload);
   }),
   showError: action((state, payload) => {
     const messageConfig =

@@ -1,12 +1,11 @@
-import React, { createRef } from "react";
+import React from "react";
 import { BasicLayout } from "pages";
 import { Form, Button, Card } from "antd";
 import { FormInput, CenterContent } from "components";
 import { FormattedMessage } from "react-intl";
 import useAuth from "services/auth";
-import { useStoreState } from "easy-peasy";
-import { Status, AppState } from "common/constants";
-import { Redirect, Route } from "react-router-dom";
+import { Status } from "common/constants";
+import { useHistory } from "react-router-dom";
 import Routes from "routes";
 
 const layout = {
@@ -18,24 +17,18 @@ const tailLayout = {
 };
 
 export default () => {
-  const { login, state } = useAuth();
-  const { status } = useStoreState((state) => ({
-    status: state.login.status,
-  }));
+  const { login, success, status } = useAuth();
+  const history = useHistory();
 
   const loginUser = (values) => {
     login(values);
   };
 
+  if (success) history.push(Routes.HOME);
+
   const isLoading = status === Status.FETCHING;
 
-  const onFinishFailed = () => {};
-
-  const buttonRef = createRef();
-
-  return state === AppState.PRIVATE ? (
-    <Redirect to={Routes.HOME} />
-  ) : (
+  return (
     <BasicLayout hideHeader={true} loading={isLoading}>
       <CenterContent span={8}>
         <Card title={<FormattedMessage id="message.welcome" />}>
@@ -44,7 +37,6 @@ export default () => {
             name="basic"
             initialValues={{ remember: true }}
             onFinish={loginUser}
-            onFinishFailed={onFinishFailed}
           >
             <FormInput
               label="Email"
@@ -60,16 +52,9 @@ export default () => {
                 { required: true, message: "Please input your password!" },
               ]}
             />
-            <FormInput
-              {...tailLayout}
-              type="check"
-              name="remember"
-              boxLabel="Remember me"
-              valuePropName="checked"
-            />
 
             <Form.Item {...tailLayout}>
-              <Button ref={buttonRef} type="primary" htmlType="submit">
+              <Button type="primary" htmlType="submit">
                 Submit
               </Button>
             </Form.Item>

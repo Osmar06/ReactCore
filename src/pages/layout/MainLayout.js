@@ -1,23 +1,38 @@
-import React, { Children } from "react";
+import React, { useState } from "react";
 import { Layout, Spin } from "antd";
-import { Sider, Breadcrumb } from "components";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Sider, Breadcrumb, Icon, UserMenu } from "components";
+import useStyles from "styles";
 
-const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 const { Header, Content } = Layout;
 
 export default ({ loading = false, children }) => {
+  const [collapsed, setCollapsed] = useState(false);
+  const classes = useStyles();
+
+  const onToggleMenu = () => setCollapsed(!collapsed);
+
   return (
     <Layout>
-      <Header></Header>
+      <Sider collapsed={collapsed} />
       <Layout>
-        <Sider />
-        <Layout>
-          <Breadcrumb />
-          <Spin spinning={loading} indicator={antIcon} size="large">
-            <Content>{children}</Content>
-          </Spin>
-        </Layout>
+        <Header>
+          <Icon
+            type={collapsed ? "menu" : "arrow-left"}
+            onClick={onToggleMenu}
+            className={classes.trigger}
+          />
+          <UserMenu />
+        </Header>
+        <Spin
+          spinning={loading}
+          indicator={<Icon type="loading" className={classes.loading} spin />}
+          size="large"
+        >
+          <Content className={classes.mainContent}>
+            <Breadcrumb />
+            <div className={classes.innerContent}>{children}</div>
+          </Content>
+        </Spin>
       </Layout>
     </Layout>
   );

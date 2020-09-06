@@ -13,6 +13,7 @@ export default () => {
     <BrowserRouter>
       <Switch>
         <Route exact path={Routes.LOGIN} component={LoginPage} />
+        <Route exact path={Routes.LOGOUT} component={LoginPage} />
         <PrivateRoute
           exact
           path={Routes.HOME}

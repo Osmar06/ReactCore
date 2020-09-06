@@ -1,7 +1,6 @@
 export const AppState = {
-  PUBLIC: "PUBLIC_LOGIN",
+  PUBLIC: "PUBLIC",
   PRIVATE: "PRIVATE",
-  AUTH: "CHECKING_LOGIN",
   UNKNOWN: "UNKNOWN",
 };
 
@@ -12,7 +11,7 @@ export const Locales = {
 
 export const Status = {
   SUCCESS: "SUCCESS",
-  NOT_STARTED: "NOT_STARTED",
+  STOPPED: "STOPPED",
   FETCHING: "FETCHING",
   FAILED: "FAILED",
 };

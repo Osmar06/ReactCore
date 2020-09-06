@@ -1,12 +1,12 @@
 import React from "react";
 import { Breadcrumb } from "antd";
-import { HomeOutlined } from "@ant-design/icons";
+import { Icon } from "components";
 
 export default ({ routes = [] }) => {
   return (
     <Breadcrumb>
       <Breadcrumb.Item>
-        <HomeOutlined />
+        <Icon type="home" />
       </Breadcrumb.Item>
     </Breadcrumb>
   );
