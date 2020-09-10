@@ -1,43 +1,44 @@
 import { action, thunk } from "easy-peasy";
 import BaseModel from "./Base";
 import { Status } from "../../common/constants";
-import { ApiService } from "../index";
 
-const getData = thunk(async (actions, payload) => {
+const getData = thunk(async (actions, payload, { injections }) => {
+  const { api } = injections;
   actions.updateStatus(Status.FETCHING);
-  const response = await ApiService.getUsers(payload);
+  const response = await api.users.get(payload);
   actions.updateStatus(response.ok ? Status.SUCCESS : Status.FAILED);
   if (!response.ok) {
-    actions.setData([]);
+    actions.setList([]);
     return actions.showError(response.data.error);
   }
 
   var data = response.data.data;
-  actions.setData(data);
+  actions.setList(data);
 });
 
-const getDataById = thunk(async (actions, payload) => {
+const getById = thunk(async (actions, payload, { injections }) => {
+  const { api } = injections;
   actions.updateStatus(Status.FETCHING);
-  const response = await ApiService.getUser(payload);
+  const response = await api.users.getById(payload);
   actions.updateStatus(response.ok ? Status.SUCCESS : Status.FAILED);
   if (!response.ok) {
-    actions.setData({});
+    actions.setSigle({});
     return actions.showError(response.data.error);
   }
 
   var data = response.data.data;
-  actions.setUser(data);
+  actions.setSigle(data);
 });
 
 const UserModel = {
   ...BaseModel(),
   getData,
-  getDataById,
-  setData: action((state, data) => {
-    state.data = data;
+  getById,
+  setList: action((state, payload) => {
+    state.list = payload;
   }),
-  setUser: action((state, user) => {
-    state.user = user;
+  setSigle: action((state, payload) => {
+    state.single = payload;
   }),
 };
 

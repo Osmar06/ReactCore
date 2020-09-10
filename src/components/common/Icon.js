@@ -9,6 +9,9 @@ import {
   QuestionOutlined,
   MenuOutlined,
   LogoutOutlined,
+  PieChartOutlined,
+  FormOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 
 export default ({ type, ...props }) => {
@@ -30,6 +33,12 @@ export default ({ type, ...props }) => {
         return <MenuOutlined {...props} />;
       case "logout":
         return <LogoutOutlined {...props} />;
+      case "pie-chart":
+        return <PieChartOutlined {...props} />;
+      case "form":
+        return <FormOutlined {...props} />;
+      case "plus":
+        return <PlusOutlined {...props} />;
       default:
         return <QuestionOutlined {...props} />;
     }

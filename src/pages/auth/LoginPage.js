@@ -5,7 +5,7 @@ import { FormInput, CenterContent } from "components";
 import { FormattedMessage } from "react-intl";
 import useAuth from "services/auth";
 import { Status } from "common/constants";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import Routes from "routes";
 
 const layout = {
@@ -24,11 +24,11 @@ export default () => {
     login(values);
   };
 
-  if (success) history.push(Routes.HOME);
-
   const isLoading = status === Status.FETCHING;
 
-  return (
+  return success ? (
+    <Redirect to={Routes.HOME} />
+  ) : (
     <BasicLayout hideHeader={true} loading={isLoading}>
       <CenterContent span={8}>
         <Card title={<FormattedMessage id="message.welcome" />}>

@@ -22,16 +22,11 @@ const createApiClient = (baseURL = config.apiBaseUrl) => {
   const setAuthorizationHeader = (accessToken) =>
     baseApi.setHeader("Authorization", `Bearer ${accessToken}`);
 
-  //Define API functions
-  const apiAuth = createApiAuth(baseApi);
-  const apiResources = createApiResources(baseApi);
-  const apiUsers = createApiUsers(baseApi);
-
   return {
     setAuthorizationHeader,
-    ...apiAuth,
-    ...apiResources,
-    ...apiUsers,
+    auth: createApiAuth(baseApi),
+    resources: createApiResources(baseApi),
+    users: createApiUsers(baseApi),
   };
 };
 

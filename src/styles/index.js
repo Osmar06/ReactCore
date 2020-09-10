@@ -20,8 +20,13 @@ const useStyles = createUseStyles({
     verticalAlign: "middle",
   },
   lightText: { color: "#FFF !important" },
-  sidebar: { minHeight: "100vh" },
-  mainContent: { padding: 20 },
+  sidebar: {
+    minHeight: "100vh",
+    overflow: "auto",
+    position: "fixed",
+    left: 0,
+  },
+  mainContent: { padding: 20, overflow: "initial" },
   innerContent: {
     background: "#fff",
     padding: 10,
@@ -29,6 +34,7 @@ const useStyles = createUseStyles({
     minHeight: "70vh",
   },
   loading: { fontSize: 24 },
+  centerText: { textAlign: "center" },
 });
 
 export default useStyles;

@@ -1,24 +1,27 @@
 import React from "react";
-import { HomePage, LoginPage } from "pages";
+import {
+  HomePage,
+  LoginPage,
+  ResourcesPage,
+  UserDetailPage,
+  LogoutPage,
+} from "pages";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 import Routes from ".";
 import PrivateRoute from "./PrivateRoute";
-import { AppState } from "common/constants";
-import { useAppContext } from "services/auth/AppContext";
 
 export default () => {
-  const { state } = useAppContext();
-  const isPrivate = state === AppState.PRIVATE;
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={Routes.LOGIN} component={LoginPage} />
-        <Route exact path={Routes.LOGOUT} component={LoginPage} />
+        <Route exact path={Routes.LOGOUT} component={LogoutPage} />
+        <PrivateRoute exact path={Routes.HOME} component={HomePage} />
+        <PrivateRoute exact path={Routes.RESOURCES} component={ResourcesPage} />
         <PrivateRoute
           exact
-          path={Routes.HOME}
-          component={HomePage}
-          secure={isPrivate}
+          path={`${Routes.USERS}/:id`}
+          component={UserDetailPage}
         />
       </Switch>
     </BrowserRouter>
