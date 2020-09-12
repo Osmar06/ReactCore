@@ -1,11 +1,11 @@
 import React from "react";
 import { BasicLayout } from "pages";
-import { Form, Button, Card } from "antd";
-import { FormInput, CenterContent } from "components";
+import { Form, Card } from "antd";
+import { FormInput, CenterContent, FormButton } from "components";
 import { FormattedMessage } from "react-intl";
 import useAuth from "services/auth";
 import { Status } from "common/constants";
-import { useHistory, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import Routes from "routes";
 
 const layout = {
@@ -18,11 +18,6 @@ const tailLayout = {
 
 export default () => {
   const { login, success, status } = useAuth();
-  const history = useHistory();
-
-  const loginUser = (values) => {
-    login(values);
-  };
 
   const isLoading = status === Status.FETCHING;
 
@@ -36,7 +31,7 @@ export default () => {
             {...layout}
             name="basic"
             initialValues={{ remember: true }}
-            onFinish={loginUser}
+            onFinish={login}
           >
             <FormInput
               label="Email"
@@ -52,12 +47,7 @@ export default () => {
                 { required: true, message: "Please input your password!" },
               ]}
             />
-
-            <Form.Item {...tailLayout}>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
+            <FormButton {...tailLayout} text="Submit" />
           </Form>
         </Card>
       </CenterContent>

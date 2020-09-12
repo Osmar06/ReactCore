@@ -1,12 +1,30 @@
 import React, { useState } from "react";
-import { Layout, Spin, PageHeader, Button } from "antd";
-import { Sider, Breadcrumb, Icon, UserMenu } from "components";
+import { Layout, PageHeader, Button, BackTop, Space } from "antd";
+import { Sider, Breadcrumb, UserMenu, Loading } from "components";
 import useStyles from "styles";
+import { useHistory } from "react-router-dom";
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UpOutlined,
+} from "@ant-design/icons";
+import LangSelector from "components/locale/LangSelector";
 
 const { Header, Content } = Layout;
 
-export default ({ loading = false, title, actions = [], children }) => {
+export default ({
+  loading = false,
+  title,
+  actions = [],
+  navigation = [],
+  showBack = false,
+  skeleton = false,
+  selectedKey,
+  backToTop = false,
+  children,
+}) => {
   const [collapsed, setCollapsed] = useState(false);
+  const history = useHistory();
   const classes = useStyles();
 
   const onToggleMenu = () => setCollapsed(!collapsed);
@@ -19,36 +37,54 @@ export default ({ loading = false, title, actions = [], children }) => {
         onClick={action.handler}
         key={index}
       >
-        <Icon type={action.icon} />
-        <span>{action.text}</span>
+        {action.icon}
+        {action.text && <span>{action.text}</span>}
       </Button>
     ));
 
   return (
     <Layout>
-      <Sider collapsed={collapsed} />
+      <Sider collapsed={collapsed} selectedKey={selectedKey} />
       <Layout style={{ marginLeft: collapsed ? 80 : 200 }}>
         <Header>
-          <Icon
-            type={collapsed ? "menu" : "arrow-left"}
-            onClick={onToggleMenu}
-            className={classes.trigger}
-          />
-          <UserMenu />
+          {collapsed ? (
+            <MenuUnfoldOutlined
+              onClick={onToggleMenu}
+              className={classes.trigger}
+            />
+          ) : (
+            <MenuFoldOutlined
+              onClick={onToggleMenu}
+              className={classes.trigger}
+            />
+          )}
+          <Space className={classes.rigth}>
+            <LangSelector />
+            <UserMenu />
+          </Space>
         </Header>
-        <Spin
-          spinning={loading}
-          indicator={<Icon type="loading" className={classes.loading} spin />}
-          size="large"
-        >
-          <Content className={classes.mainContent}>
-            <Breadcrumb />
-            <div className={classes.innerContent}>
-              {title && <PageHeader title={title} extra={getActions()} />}
+        <Content className={classes.mainContent}>
+          <Breadcrumb navigation={navigation} />
+          <div className={classes.innerContent}>
+            {title && (
+              <PageHeader
+                title={title}
+                extra={getActions()}
+                onBack={showBack ? () => history.goBack() : null}
+              />
+            )}
+            <Loading loading={loading} skeleton={skeleton}>
               {children}
-            </div>
-          </Content>
-        </Spin>
+              {backToTop && (
+                <BackTop>
+                  <Button type="primary" shape="circle" size="large">
+                    <UpOutlined />
+                  </Button>
+                </BackTop>
+              )}
+            </Loading>
+          </div>
+        </Content>
       </Layout>
     </Layout>
   );

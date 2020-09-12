@@ -1,22 +1,25 @@
 import React from "react";
-import { Layout, Spin } from "antd";
-import { Icon } from "components";
+import { Layout } from "antd";
+import { Loading } from "components";
 import useStyles from "styles";
 const { Header, Content } = Layout;
 
-export default ({ loading = false, children, hideHeader = false }) => {
+export default ({
+  loading = false,
+  skeleton = false,
+  hideHeader = false,
+  children,
+}) => {
   const classes = useStyles();
   return (
     <Layout>
       {!hideHeader && <Header></Header>}
       <Layout>
-        <Spin
-          spinning={loading}
-          indicator={<Icon type="loading" className={classes.loading} spin />}
-          size="large"
-        >
-          <Content style={{ height: "100vh" }}>{children}</Content>
-        </Spin>
+        <Content className={classes.fullHeight}>
+          <Loading loading={loading} skeleton={skeleton}>
+            {children}
+          </Loading>
+        </Content>
       </Layout>
     </Layout>
   );

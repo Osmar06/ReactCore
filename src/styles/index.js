@@ -13,15 +13,19 @@ const useStyles = createUseStyles({
     background: "rgba(255, 255, 255, 0.2)",
     margin: "16px",
   },
-  avatar: {
+  rigth: {
     float: "right",
+  },
+  avatar: {
     cursor: "pointer",
     transition: "color 0.3s",
     verticalAlign: "middle",
   },
   lightText: { color: "#FFF !important" },
+  fullHeight: {
+    height: "100vh",
+  },
   sidebar: {
-    minHeight: "100vh",
     overflow: "auto",
     position: "fixed",
     left: 0,
@@ -35,6 +39,7 @@ const useStyles = createUseStyles({
   },
   loading: { fontSize: 24 },
   centerText: { textAlign: "center" },
+  select: { width: 120 },
 });
 
 export default useStyles;

@@ -4,6 +4,7 @@ import LoginPage from "./auth/LoginPage";
 import LogoutPage from "./auth/LogoutPage";
 import HomePage from "./home/HomePage";
 import ResourcesPage from "./resources/ResourcesPage";
+import UsersPage from "./users/UsersPage";
 import UserDetailPage from "./users/UserDetailPage";
 export {
   MainLayout,
@@ -12,5 +13,6 @@ export {
   HomePage,
   LogoutPage,
   ResourcesPage,
+  UsersPage,
   UserDetailPage,
 };

@@ -5,6 +5,7 @@ import {
   ResourcesPage,
   UserDetailPage,
   LogoutPage,
+  UsersPage,
 } from "pages";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 import Routes from ".";
@@ -18,6 +19,7 @@ export default () => {
         <Route exact path={Routes.LOGOUT} component={LogoutPage} />
         <PrivateRoute exact path={Routes.HOME} component={HomePage} />
         <PrivateRoute exact path={Routes.RESOURCES} component={ResourcesPage} />
+        <PrivateRoute exact path={Routes.USERS} component={UsersPage} />
         <PrivateRoute
           exact
           path={`${Routes.USERS}/:id`}

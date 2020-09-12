@@ -1,25 +1,24 @@
 import { action, thunk } from "easy-peasy";
 import BaseModel from "./Base";
 import { Status } from "../../common/constants";
-import { ApiService } from "../index";
 
-const getData = thunk(async (actions, payload) => {
+const getData = thunk(async (actions, payload, { injections }) => {
+  const { api } = injections;
   actions.updateStatus(Status.FETCHING);
-  const response = await ApiService.getResources(payload);
-  actions.updateStatus(response.ok ? Status.SUCCESS : Status.FAILED);
-  if (!response.ok) {
+  const { ok, data } = await api.resources.get(payload);
+  actions.updateStatus(ok ? Status.SUCCESS : Status.FAILED);
+  if (!ok) {
     actions.setData([]);
-    return actions.showError(response.data.error);
+    return actions.showError(data.error);
   }
 
-  var data = response.data.data;
-  actions.setData(data);
+  actions.setData(data.data);
 });
 
 export default {
   ...BaseModel(),
   getData,
-  setData: action((state, data) => {
-    state.data = data;
+  setData: action((state, payload) => {
+    state.list = payload;
   }),
 };

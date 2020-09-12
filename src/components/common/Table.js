@@ -1,7 +1,7 @@
 import React from "react";
 import { Table, Checkbox, Avatar, Tag, Button } from "antd";
 import Moment from "react-moment";
-import { Icon } from "components";
+import { UserOutlined } from "@ant-design/icons";
 
 const columnType = {
   number: "number",
@@ -21,8 +21,8 @@ export default ({ columns = [], data = [], rowKey = "id", ...props }) => {
         const { icon, handler, text } = action;
         return (
           <Button key={index} onClick={() => handler(record)}>
-            <Icon type={icon} />
-            <span>{text}</span>
+            {icon}
+            {text && <span>{text}</span>}
           </Button>
         );
       })}
@@ -32,7 +32,7 @@ export default ({ columns = [], data = [], rowKey = "id", ...props }) => {
   const getColumnRender = (type, value, record, actions) => {
     switch (type) {
       case columnType.image:
-        return <Avatar icon={<Icon type="user" />} src={value} />;
+        return <Avatar icon={<UserOutlined />} src={value} />;
       case columnType.date:
         return <Moment format="ll" date={value} />;
       case columnType.time:

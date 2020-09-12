@@ -5,5 +5,5 @@ import ResourceModel from "./Resource";
 export default {
   login: LoginModel,
   users: UserModel,
-  resource: ResourceModel,
+  resources: ResourceModel,
 };

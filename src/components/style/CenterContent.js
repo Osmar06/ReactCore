@@ -3,7 +3,7 @@ import { Col, Row } from "antd";
 
 export default ({ children, ...props }) => {
   return (
-    <Row justify="space-around" align="middle" style={{ height: "100%" }}>
+    <Row justify="space-around" align="middle">
       <Col {...props}>{children}</Col>
     </Row>
   );

@@ -2,5 +2,16 @@
   "message.emailRequired": "Please input your email",
   "message.passwordRequired": "Please input your password",
   "message.welcome": "Welcome to NativeCore",
-  "menu.logout": "Logout"
+  "menu.logout": "Logout",
+  "menu.home": "Home",
+  "menu.users": "Users",
+  "menu.resources": "Resources",
+  "page.home": "Home",
+  "page.users": "Users",
+  "page.resources": "Resources",
+  "field.email": "Email",
+  "field.firstName": "First Name",
+  "field.lastName": "Last Name",
+  "field.photo": "Email",
+  "field.actions": "Actions"
 }
